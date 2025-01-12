@@ -47,6 +47,36 @@ class TestWindow(unittest.TestCase):
         self.assertFalse(self.window._Window__running)
         self.window._Window__running = True
         self.assertTrue(self.window._Window__running)
+    
+    def test_window_invalid_type(self):
+        with self.assertRaises(TypeError):
+            Window("not a number", 600)
+        with self.assertRaises(TypeError):
+            Window(800, "not a number")
+
+    def test_window_negative_size(self):
+        with self.assertRaises(ValueError):
+            Window(-800, 600)
+        with self.assertRaises(ValueError):
+            Window(800, -600)
+
+    def test_window_zero_size(self):
+        with self.assertRaises(ValueError):
+            Window(0, 600)
+        with self.assertRaises(ValueError):
+            Window(800, 0)
+
+    def test_window_too_small(self):
+        with self.assertRaises(ValueError):
+            Window(50, 600)
+        with self.assertRaises(ValueError):
+            Window(800, 50)
+
+    def test_window_too_large(self):
+        with self.assertRaises(ValueError):
+            Window(4000, 600)
+        with self.assertRaises(ValueError):
+            Window(800, 4000)
 
 if __name__ == '__main__':
     unittest.main()

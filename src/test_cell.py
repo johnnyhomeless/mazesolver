@@ -26,5 +26,29 @@ class TestCell(unittest.TestCase):
         self.cell.has_left_wall = False
         self.assertFalse(self.cell.has_left_wall)
 
+    def test_get_center(self):
+        cell = Cell(0, 0, 10, 10, self.window)
+        center = cell.get_center()
+        self.assertEqual(center.x, 5)
+        self.assertEqual(center.y, 5)
+
+    def test_get_center_different_size(self):
+        cell = Cell(0, 0, 20, 40, self.window)
+        center = cell.get_center()
+        self.assertEqual(center.x, 10)
+        self.assertEqual(center.y, 20)
+
+    def test_draw_move(self):
+        cell1 = Cell(0, 0, 10, 10, self.window)
+        cell2 = Cell(20, 0, 30, 10, self.window)
+        
+        try:
+            cell1.draw_move(cell2)
+            cell1.draw_move(cell2, True) 
+            test_passed = True
+        except Exception as e:
+            test_passed = False
+        self.assertTrue(test_passed)
+
 if __name__ == '__main__':
     unittest.main()

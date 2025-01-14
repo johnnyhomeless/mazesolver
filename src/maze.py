@@ -2,6 +2,8 @@ from cell import Cell
 from window import Window
 import time
 
+#  test
+
 class Maze:
     def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
         if x1 < 0 or y1 < 0:

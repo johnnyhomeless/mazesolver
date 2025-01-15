@@ -3,7 +3,7 @@ from window import Window
 import time
 import random
 
-class Maze:
+class Maze: 
    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win, seed=None):
        if seed is not None:
            random.seed(seed)
@@ -99,3 +99,51 @@ class Maze:
        for i in range(self.num_rows):
            for j in range(self.num_cols):
                self._cells[i][j].visited = False
+               
+   def solve(self):
+    self._reset_cells_visited()
+    return self._solve_r(0, 0)
+   
+   def _solve_r(self, i, j):
+    self._animate()
+    current = self._cells[i][j]
+    current.visited = True
+    
+    # Base case - reached end
+    if i == self.num_rows-1 and j == self.num_cols-1:
+        return True
+        
+    # Check each direction
+    # North
+    if i > 0 and not current.has_top_wall and not self._cells[i-1][j].visited:
+        next_cell = self._cells[i-1][j]
+        current.draw_move(next_cell)
+        if self._solve_r(i-1, j):
+            return True
+        current.draw_move(next_cell, True)
+
+    # East
+    if j < self.num_cols-1 and not current.has_right_wall and not self._cells[i][j+1].visited:
+        next_cell = self._cells[i][j+1]
+        current.draw_move(next_cell)
+        if self._solve_r(i, j+1):
+            return True
+        current.draw_move(next_cell, True)
+
+    # South
+    if i < self.num_rows-1 and not current.has_bottom_wall and not self._cells[i+1][j].visited:
+        next_cell = self._cells[i+1][j]
+        current.draw_move(next_cell)
+        if self._solve_r(i+1, j):
+            return True
+        current.draw_move(next_cell, True)
+
+    # West
+    if j > 0 and not current.has_left_wall and not self._cells[i][j-1].visited:
+        next_cell = self._cells[i][j-1]
+        current.draw_move(next_cell)
+        if self._solve_r(i, j-1):
+            return True
+        current.draw_move(next_cell, True)
+
+    return False

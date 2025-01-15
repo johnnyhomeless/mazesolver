@@ -11,7 +11,8 @@ class Cell:
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
-
+        self.visited = False
+        
     def draw(self):
         point1 = Point(self.x1, self.y1) 
         point2 = Point(self.x1, self.y2) 

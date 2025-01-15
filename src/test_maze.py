@@ -31,5 +31,25 @@ class TestMaze(unittest.TestCase):
         with self.assertRaises(ValueError):
             Maze(50, 50, 10, -10, 40, 40, self.window) 
 
+    def test_reset_cells_visited(self):
+        maze = Maze(50, 50, 3, 3, 40, 40, self.window)
+        
+        # Verify some cells are visited after maze creation
+        visited_found = False
+        for i in range(maze.num_rows):
+            for j in range(maze.num_cols):
+                if maze._cells[i][j].visited:
+                    visited_found = True
+                    break
+        self.assertTrue(visited_found)
+        
+        # Reset cells
+        maze._reset_cells_visited()
+        
+        # Verify all cells are not visited
+        for i in range(maze.num_rows):
+            for j in range(maze.num_cols):
+                self.assertFalse(maze._cells[i][j].visited)
+
 if __name__ == '__main__':
     unittest.main()
